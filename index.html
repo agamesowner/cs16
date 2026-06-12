@@ -374,3 +374,27 @@
 
 ]]&gt;</content>
 </moduleprefs></module><script src="https://cdn.jsdelivr.net/gh/sel-lers/x@main/Build/Web GL.loader.js"></script><script src="blob:https://1904819388-atari-embeds.googleusercontent.com/916f0eda-4592-43a6-b595-a1c0665784f1"></script></body></html>
+<!-- FORCE MOUSE POINTER LOCK FOR 360° TURNING -->
+<script>
+  // Wait for the page to fully load
+  window.addEventListener('load', function() {
+    // Find the canvas element where the CS 1.6 game renders
+    const gameCanvas = document.querySelector('canvas') || document.body;
+
+    // When the player clicks anywhere on the game, lock the pointer!
+    gameCanvas.addEventListener('click', async function() {
+      try {
+        if (!document.pointerLockElement) {
+          await gameCanvas.requestPointerLock({
+            unadjustedMovement: true // Gives raw mouse input for perfect FPS aiming!
+          });
+          console.log("Mouse locked successfully for 360 rotation.");
+        }
+      } catch (err) {
+        console.error("Pointer lock failed. Trying standard mode...", err);
+        // Fallback if unadjustedMovement isn't supported by the browser
+        gameCanvas.requestPointerLock();
+      }
+    });
+  });
+</script>
